@@ -1058,6 +1058,11 @@ input[type="checkbox"] {
   margin-top: 20px;
 }
 
+.registration-proof {
+  grid-template-columns: 1fr;
+  margin-top: 4px;
+}
+
 .upload-box {
   position: relative;
   min-height: 170px;

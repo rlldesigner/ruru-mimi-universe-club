@@ -41,6 +41,9 @@ const copy = {
     reviewUrl: "후기 링크",
     reviewHelp:
       "후기 확인 후 1,000 유니버스 클럽 크레딧이 지급됩니다. 비공개 계정은 확인이 안될 시 발행이 불가합니다.",
+    proofPhotoTitle: "정품 등록 증빙 사진",
+    proofPhotoHelp: "영수증 사진 또는 제품 전체 사진 1장",
+    proofUploadHelp: "구매 확인을 위해 영수증 사진 또는 제품 전체 사진을 첨부해주세요.",
     consent: "개인정보 수집 및 이용에 동의합니다.",
     required: "(필수)",
     viewTerms: "내용 보기",
@@ -94,7 +97,7 @@ const copy = {
     goToService: "내 구매 확인 · A/S 접수",
     privacyTitle: "개인정보 수집 및 이용",
     privacyCopy:
-      "제품 등록, 고객 지원 및 혜택 제공을 위해 이름, 연락처, 주소, 이메일, 구매 정보와 A/S 접수 사진을 수집합니다. 정보는 서비스 제공 목적 달성 후 관련 법령에 따라 안전하게 파기됩니다.",
+      "제품 등록, 고객 지원 및 혜택 제공을 위해 이름, 연락처, 주소, 이메일, 구매 정보, 정품 등록 증빙 사진과 A/S 접수 사진을 수집합니다. 정보는 서비스 제공 목적 달성 후 관련 법령에 따라 안전하게 파기됩니다.",
     confirm: "확인했습니다",
     creditTitle: "크레딧 사용 안내",
     creditCopy:
@@ -146,6 +149,9 @@ const copy = {
     reviewUrl: "Review Link",
     reviewHelp:
       "After review confirmation, 1,000 Universe Club credits will be issued. Private accounts may not be eligible if the review cannot be verified.",
+    proofPhotoTitle: "Authenticity Verification Photo",
+    proofPhotoHelp: "1 receipt photo or full product photo",
+    proofUploadHelp: "Please attach a receipt photo or a full product photo for purchase verification.",
     consent: "I agree to the collection and use of personal information.",
     required: "(Required)",
     viewTerms: "View details",
@@ -199,7 +205,7 @@ const copy = {
     goToService: "Purchase Verification / A/S",
     privacyTitle: "Collection and Use of Personal Information",
     privacyCopy:
-      "We collect your name, contact information, address, email, purchase details, and A/S photos to provide product registration, customer support, and benefits. Information is securely deleted according to applicable laws after the service purpose is fulfilled.",
+      "We collect your name, contact information, address, email, purchase details, authenticity verification photos, and A/S photos to provide product registration, customer support, and benefits. Information is securely deleted according to applicable laws after the service purpose is fulfilled.",
     confirm: "Got it",
     creditTitle: "How to Use Credits",
     creditCopy:
@@ -435,6 +441,9 @@ function applyLanguage() {
   document.querySelector(".referral-box > p")?.insertAdjacentHTML("beforeend", ` <i>${t("optional")}</i>`);
   setText(".referral-box > small", t("referralCopy"));
   setText('#registrationForm [name="reviewUrl"] + small', t("reviewHelp"));
+  setText("#proofPhotoTitle", t("proofPhotoTitle"));
+  setHtml("#proofPhotoHelp", `${t("proofPhotoHelp")} <b>${t("photoRequired")}</b>`);
+  setText("#proofUploadHelp", t("proofUploadHelp"));
   setHtml(".consent span", `${t("consent")} <b>${t("required")}</b>`);
   setText("#privacyOpen", t("viewTerms"));
   setText("#registrationForm .primary-button span", t("registerSubmit"));
@@ -461,11 +470,11 @@ function applyLanguage() {
   setText("#serviceForm legend", t("asLegend"));
   const serviceLabels = document.querySelectorAll("#serviceForm .field > span");
   if (serviceLabels[0]) serviceLabels[0].innerHTML = `${t("inquiry")} <b>*</b>`;
-  setText(".upload-box:nth-child(1) strong", t("overallPhoto"));
-  setHtml(".upload-box:nth-child(1) span", `${t("overallPhotoHelp")} <b>${t("photoRequired")}</b>`);
-  setText(".upload-box:nth-child(2) strong", t("issuePhoto"));
-  setHtml(".upload-box:nth-child(2) span", `${t("issuePhotoHelp")} <b>${t("photoRequired")}</b>`);
-  setText(".upload-help", t("uploadHelp"));
+  setText("#serviceForm .upload-box:nth-child(1) strong", t("overallPhoto"));
+  setHtml("#serviceForm .upload-box:nth-child(1) span", `${t("overallPhotoHelp")} <b>${t("photoRequired")}</b>`);
+  setText("#serviceForm .upload-box:nth-child(2) strong", t("issuePhoto"));
+  setHtml("#serviceForm .upload-box:nth-child(2) span", `${t("issuePhotoHelp")} <b>${t("photoRequired")}</b>`);
+  setText("#serviceForm .upload-help", t("uploadHelp"));
   setText("#serviceForm .primary-button", t("asSubmit"));
 
   setText(".admin-login h1", t("adminLoginTitle"));
@@ -560,6 +569,8 @@ function loadCustomers() {
         }[customer.product] || customer.product,
       version: customer.version || "모름",
       dogName: customer.dogName || "",
+      proofPhoto: customer.proofPhoto || "",
+      proofPhotoType: customer.proofPhotoType || "",
       credits: customer.credits || [],
       inquiries: (customer.inquiries || []).map((inquiry) => ({
         consultation: "",
@@ -596,6 +607,8 @@ function createSheetPayload(eventType, customer, extra = {}) {
     purchaseDate: customer.purchaseDate,
     store: customer.store,
     storeDetail: customer.storeDetail || "",
+    proofPhoto: customer.proofPhoto || "",
+    proofPhotoType: customer.proofPhotoType || "",
     referralName: customer.referralName || "",
     referralPhoneLast4: customer.referralPhoneLast4 || "",
     referredByRegistrationNumber: customer.referredByRegistrationNumber || "",
@@ -976,6 +989,7 @@ function handleRegistration(event) {
   const referrer = findReferrer(referralName, referralPhoneLast4);
   const hasReferralInfo = Boolean(referralName || referralPhoneLast4);
   const reviewUrl = String(formData.get("reviewUrl") || "").trim();
+  const proofPhoto = formData.get("proofPhoto");
   const initialCredits = [];
   if (hasReferralInfo) {
     initialCredits.push(
@@ -1009,6 +1023,8 @@ function handleRegistration(event) {
     purchaseDate,
     store: formData.get("store"),
     storeDetail: String(formData.get("storeDetail") || "").trim(),
+    proofPhoto: proofPhoto?.name || "",
+    proofPhotoType: proofPhoto?.type || "",
     referralName,
     referralPhoneLast4,
     referredByRegistrationNumber: referrer?.registrationNumber || "",
@@ -1043,6 +1059,8 @@ function handleRegistration(event) {
   elements.version.innerHTML = `<option value="">${t("selectProductFirst")}</option>`;
   elements.version.disabled = true;
   resetColorFields();
+  document.querySelector(".registration-proof .upload-box")?.classList.remove("has-file");
+  document.querySelector('[data-file-label="proofPhoto"]').textContent = t("selectPhoto");
   elements.storeDetailField.classList.add("hidden");
   elements.storeDetail.required = false;
   if (hasReferralInfo) {
@@ -1080,8 +1098,8 @@ function resetServiceLookup() {
   elements.recoveryResults.innerHTML = "";
   elements.purchaseResult.classList.add("hidden");
   elements.creditCard.classList.add("hidden");
-  document.querySelectorAll(".upload-box").forEach((box) => box.classList.remove("has-file"));
-  document.querySelectorAll("[data-file-label]").forEach((label) => {
+  elements.serviceForm.querySelectorAll(".upload-box").forEach((box) => box.classList.remove("has-file"));
+  elements.serviceForm.querySelectorAll("[data-file-label]").forEach((label) => {
     label.textContent = t("selectPhoto");
   });
 }
@@ -1231,8 +1249,8 @@ async function handleServiceRequest(event) {
     issuePhotos: inquiry.issuePhotos.join(" | "),
   });
   elements.serviceForm.reset();
-  document.querySelectorAll(".upload-box").forEach((box) => box.classList.remove("has-file"));
-  document.querySelectorAll("[data-file-label]").forEach((label) => {
+  elements.serviceForm.querySelectorAll(".upload-box").forEach((box) => box.classList.remove("has-file"));
+  elements.serviceForm.querySelectorAll("[data-file-label]").forEach((label) => {
     label.textContent = t("selectPhoto");
   });
   showToast(t("serviceSubmitted"));
@@ -1391,6 +1409,7 @@ function openCustomerDetail(customerId) {
     [currentLanguage === "ko" ? "색상" : "Color", colors || "-"],
     [currentLanguage === "ko" ? "구매 날짜" : "Purchase Date", formatDate(customer.purchaseDate)],
     [currentLanguage === "ko" ? "구매처" : "Purchase Channel", formatStore(customer) || "-"],
+    [currentLanguage === "ko" ? "정품 등록 증빙" : "Verification Photo", customer.proofPhoto || "-"],
     [currentLanguage === "ko" ? "후기 링크" : "Review Link", customer.reviewUrl || "-"],
     [currentLanguage === "ko" ? "추천 정보" : "Referral", customer.referralName || "-"],
     [currentLanguage === "ko" ? "추천 전화 뒷자리" : "Referrer Phone Last 4", customer.referralPhoneLast4 || "-"],
@@ -1826,6 +1845,7 @@ function downloadCsv() {
     "두 번째 색상",
     "구매 날짜",
     "구매처",
+    "정품 등록 증빙 사진",
     "추천인/추천 반려동물",
     "추천인 전화번호 뒷자리",
     "추천 매칭 등록번호",
@@ -1853,6 +1873,7 @@ function downloadCsv() {
     customer.secondColor || "",
     customer.purchaseDate,
     formatStore(customer),
+    customer.proofPhoto || "",
     customer.referralName || "",
     customer.referralPhoneLast4 || "",
     customer.referredByRegistrationNumber || "",
@@ -1971,11 +1992,11 @@ elements.adminCustomerForm.elements.phone.addEventListener("input", (event) => {
 elements.adminCustomerForm.elements.referralPhoneLast4.addEventListener("input", (event) => {
   event.target.value = event.target.value.replace(/\D/g, "").slice(0, 4);
 });
-elements.serviceForm.querySelectorAll('input[type="file"]').forEach((input) => {
+document.querySelectorAll('input[type="file"]').forEach((input) => {
   input.addEventListener("change", () => {
     const label = document.querySelector(`[data-file-label="${input.name}"]`);
     const count = input.files.length;
-    label.textContent = count ? t("fileCount")(count) : t("selectPhoto");
+    if (label) label.textContent = count ? t("fileCount")(count) : t("selectPhoto");
     input.closest(".upload-box").classList.toggle("has-file", count > 0);
   });
 });
