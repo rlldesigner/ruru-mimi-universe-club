@@ -11,6 +11,7 @@
   --orbit: #c9c1a8;
   --white: #fff;
   --serif: "Playfair Display", Georgia, serif;
+  --hero-sans: "Pretendard", "Noto Sans KR", "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   --sans: "DM Sans", "Noto Sans KR", sans-serif;
 }
 
@@ -227,7 +228,7 @@ select {
 
 .hero h1 {
   margin: 0;
-  font-family: var(--sans);
+  font-family: var(--hero-sans);
   font-size: clamp(41px, 4.8vw, 66px);
   font-weight: 500;
   line-height: 1.14;
