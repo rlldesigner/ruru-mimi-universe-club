@@ -6,7 +6,7 @@ const REFERRER_CREDIT = 2000;
 const REVIEW_CREDIT = 1000;
 const LANGUAGE_KEY = "ruruMimiLanguage";
 const GOOGLE_SHEETS_WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbz2rJGihNjsMl0mBg9_8YqfFx2BHzcNHwr8COSumm-T0FTigw3HDnUilAY5mM1agWgj/exec";
+  "https://script.google.com/macros/s/AKfycbyuz-8ZiIDQt42N3BFf7QyHXwitRIZc_qPmnZ0ofBhaTotKDPsajzBIgkO4OP0c49Mx/exec";
 
 let currentLanguage = localStorage.getItem(LANGUAGE_KEY) || "ko";
 
@@ -587,6 +587,32 @@ function saveCustomers() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(customers));
 }
 
+function fileToSheetAttachment(file, kind) {
+  if (!file || !file.name) return Promise.resolve(null);
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = String(reader.result || "");
+      resolve({
+        kind,
+        name: file.name,
+        type: file.type || "application/octet-stream",
+        data: result.includes(",") ? result.split(",").pop() : result,
+      });
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
+async function filesToSheetAttachments(files, kind) {
+  const fileList = Array.from(files || []);
+  const attachments = await Promise.all(
+    fileList.map((file, index) => fileToSheetAttachment(file, `${kind}-${index + 1}`)),
+  );
+  return attachments.filter(Boolean);
+}
+
 function createSheetPayload(eventType, customer, extra = {}) {
   return {
     eventType,
@@ -963,7 +989,7 @@ function updateMaterialNote() {
   elements.materialNote.classList.remove("hidden");
 }
 
-function handleRegistration(event) {
+async function handleRegistration(event) {
   event.preventDefault();
   const formData = new FormData(elements.form);
   const selectedColor = elements.color.selectedOptions[0];
@@ -990,6 +1016,13 @@ function handleRegistration(event) {
   const hasReferralInfo = Boolean(referralName || referralPhoneLast4);
   const reviewUrl = String(formData.get("reviewUrl") || "").trim();
   const proofPhoto = formData.get("proofPhoto");
+  let proofAttachment = null;
+  try {
+    proofAttachment = await fileToSheetAttachment(proofPhoto, "registration-proof");
+  } catch {
+    showToast(t("photoSaveError"));
+    return;
+  }
   const initialCredits = [];
   if (hasReferralInfo) {
     initialCredits.push(
@@ -1053,7 +1086,9 @@ function handleRegistration(event) {
   }
   customers.unshift(customer);
   saveCustomers();
-  sendSheetEvent("registration_created", customer);
+  sendSheetEvent("registration_created", customer, {
+    attachments: proofAttachment ? [proofAttachment] : [],
+  });
   showSuccess(customer);
   elements.form.reset();
   elements.version.innerHTML = `<option value="">${t("selectProductFirst")}</option>`;
@@ -1234,6 +1269,16 @@ async function handleServiceRequest(event) {
     showToast(t("photoSaveError"));
     return;
   }
+  let asAttachments = [];
+  try {
+    asAttachments = [
+      await fileToSheetAttachment(overallPhoto, "as-overall"),
+      ...(await filesToSheetAttachments(issuePhotos, "as-issue")),
+    ].filter(Boolean);
+  } catch {
+    showToast(t("photoSaveError"));
+    return;
+  }
   const inquiries = [...(customer.inquiries || []), inquiry];
   customers = customers.map((item) =>
     item.id === customer.id
@@ -1247,6 +1292,7 @@ async function handleServiceRequest(event) {
     asRequestDate: inquiry.createdAt,
     overallPhoto: inquiry.overallPhoto,
     issuePhotos: inquiry.issuePhotos.join(" | "),
+    attachments: asAttachments,
   });
   elements.serviceForm.reset();
   elements.serviceForm.querySelectorAll(".upload-box").forEach((box) => box.classList.remove("has-file"));

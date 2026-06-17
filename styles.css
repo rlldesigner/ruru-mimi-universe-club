@@ -227,15 +227,16 @@ select {
 
 .hero h1 {
   margin: 0;
-  font-family: var(--serif);
-  font-size: clamp(44px, 5vw, 70px);
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
+  font-family: var(--sans);
+  font-size: clamp(41px, 4.8vw, 66px);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.035em;
 }
 
 .hero h1 em {
   color: var(--orbit);
+  font-style: normal;
   font-weight: 500;
 }
 
@@ -1870,7 +1871,8 @@ dialog > p:last-of-type {
   }
 
   .hero h1 {
-    font-size: 40px;
+    font-size: 37px;
+    letter-spacing: -0.03em;
   }
 
   .hero-stamp {
