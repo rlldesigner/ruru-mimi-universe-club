@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Ruru & Mimi Universe Club 고객 제품 등록 및 A/S 관리"
+    />
+    <title>Ruru & Mimi Universe Club</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;1,500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Ruru and Mimi 홈">
+        <span class="brand-mark">R<span>&</span>M</span>
+        <span class="brand-name">RURU &amp; MIMI</span>
+      </a>
+      <nav class="main-nav" aria-label="주 메뉴">
+        <button class="nav-link active" data-view="register">제품 등록</button>
+        <button class="nav-link" data-view="service">구매 확인 · A/S</button>
+        <button class="nav-link" data-view="admin">관리자</button>
+      </nav>
+      <div class="language-switch" aria-label="Language">
+        <button class="language-button active" type="button" data-lang="ko">KR</button>
+        <button class="language-button" type="button" data-lang="en">EN</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="view active" id="registerView">
+        <div class="hero">
+          <div class="eyebrow"><span></span> Universe Club</div>
+          <h1>작은 취향이 모여<br /><em>하나의 세계가 됩니다.</em></h1>
+          <p>
+            루루앤미미 제품을 등록하고, 유니버스 클럽만의<br class="desktop-only" />
+            세심한 케어와 특별한 혜택을 만나보세요.
+          </p>
+          <div class="hero-stamp" aria-hidden="true">
+            <span>RURU &amp; MIMI</span>
+            <strong>U</strong>
+            <small>UNIVERSE CLUB</small>
+          </div>
+        </div>
+
+        <div class="registration-wrap">
+          <aside class="membership-preview">
+            <p class="card-kicker">UNIVERSE CLUB</p>
+            <div class="card-orbit"></div>
+            <div class="card-monogram">R<span>&</span>M</div>
+            <div class="card-footer">
+              <div>
+                <small>MEMBER SINCE</small>
+                <strong id="memberSince">2026.06</strong>
+              </div>
+              <div>
+                <small>REGISTRATION</small>
+                <strong>YOUR UNIQUE NUMBER</strong>
+              </div>
+            </div>
+          </aside>
+
+          <section class="form-panel">
+            <div class="section-heading">
+              <span>01</span>
+              <div>
+                <p>PRODUCT REGISTRATION</p>
+                <h2>제품 등록하기</h2>
+              </div>
+            </div>
+
+            <form id="registrationForm">
+              <fieldset>
+                <legend>고객 정보</legend>
+                <div class="field-grid two-col">
+                  <label class="field">
+                    <span>이름 <b>*</b></span>
+                    <input name="name" type="text" placeholder="이름을 입력해주세요" required />
+                  </label>
+                  <label class="field">
+                    <span>휴대폰 번호 <b>*</b></span>
+                    <input
+                      name="phone"
+                      type="tel"
+                      inputmode="numeric"
+                      placeholder="010-0000-0000"
+                      required
+                    />
+                  </label>
+                  <label class="field full">
+                    <span>주소 <b>*</b></span>
+                    <input name="address" type="text" placeholder="주소를 입력해주세요" required />
+                  </label>
+                  <label class="field full">
+                    <span>반려동물 이름 <b>*</b></span>
+                    <input
+                      name="dogName"
+                      type="text"
+                      placeholder="반려동물 이름을 입력해주세요"
+                      required
+                    />
+                  </label>
+                  <label class="field full">
+                    <span>이메일 <b>*</b></span>
+                    <input
+                      name="email"
+                      type="email"
+                      placeholder="hello@example.com"
+                      required
+                    />
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>구매 정보</legend>
+                <div class="field-grid two-col">
+                  <label class="field">
+                    <span>구매 제품 <b>*</b></span>
+                    <select name="product" id="productSelect" required>
+                      <option value="">제품을 선택해주세요</option>
+                      <option value="Gatz Mini">Gatz Mini · 겟츠 미니</option>
+                      <option value="Gatz U.P">Gatz U.P · 겟츠 유피</option>
+                      <option value="Gatz Twin">Gatz Twin · 겟츠 트윈</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span>제품 버전 <b>*</b></span>
+                    <select name="version" id="versionSelect" required disabled>
+                      <option value="">제품을 먼저 선택해주세요</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span>색상 <b>*</b></span>
+                    <select name="color" id="colorSelect" required disabled>
+                      <option value="">버전을 먼저 선택해주세요</option>
+                    </select>
+                  </label>
+                  <label class="field hidden" id="secondColorField">
+                    <span>두 번째 색상 <b>*</b></span>
+                    <select name="secondColor" id="secondColorSelect">
+                      <option value="">두 번째 색상을 선택해주세요</option>
+                    </select>
+                  </label>
+                  <div class="material-note full hidden" id="materialNote"></div>
+                  <label class="field">
+                    <span>구매 날짜 <b>*</b></span>
+                    <input name="purchaseDate" id="purchaseDate" type="date" required />
+                  </label>
+                  <label class="field">
+                    <span>구매처 <b>*</b></span>
+                    <select name="store" id="storeSelect" required>
+                      <option value="">구매처를 선택해주세요</option>
+                      <option>공식 온라인 스토어</option>
+                      <option>네이버 브랜드 스토어</option>
+                      <option>오프라인 매장</option>
+                      <option>기타(펫페어)</option>
+                    </select>
+                  </label>
+                  <label class="field full hidden" id="storeDetailField">
+                    <span>구매 장소 <b>*</b></span>
+                    <input
+                      name="storeDetail"
+                      id="storeDetailInput"
+                      type="text"
+                      placeholder="구매한 펫페어명 또는 장소를 입력해주세요"
+                    />
+                  </label>
+                  <div class="referral-box full">
+                    <p>추천인 정보 <i>선택</i></p>
+                    <small>
+                      추천받은 고객에게 1,000 크레딧, 추천한 고객에게 2,000 크레딧이
+                      지급됩니다.
+                    </small>
+                    <div class="field-grid two-col">
+                      <label class="field">
+                        <span>추천인 이름 또는 추천 반려동물 이름</span>
+                        <input
+                          name="referralName"
+                          type="text"
+                          placeholder="추천인 또는 추천 반려동물 이름"
+                        />
+                      </label>
+                      <label class="field">
+                        <span>추천인 전화번호 뒷자리</span>
+                        <input
+                          name="referralPhoneLast4"
+                          type="text"
+                          inputmode="numeric"
+                          maxlength="4"
+                          placeholder="뒷자리 4자리"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <label class="field full">
+                    <span>후기 링크 <i>선택</i></span>
+                    <input
+                      name="reviewUrl"
+                      type="url"
+                      placeholder="https:// 후기 게시물 주소를 입력해주세요"
+                    />
+                    <small>
+                      후기 확인 후 1,000 유니버스 클럽 크레딧이 지급됩니다.
+                      비공개 계정은 확인이 안될 시 발행이 불가합니다.
+                    </small>
+                  </label>
+                </div>
+              </fieldset>
+
+              <label class="consent">
+                <input type="checkbox" required />
+                <span>개인정보 수집 및 이용에 동의합니다. <b>(필수)</b></span>
+                <button type="button" id="privacyOpen">내용 보기</button>
+              </label>
+
+              <button class="primary-button" type="submit">
+                <span>유니버스 클럽 등록하기</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h13M13 6l6 6-6 6" />
+                </svg>
+              </button>
+            </form>
+          </section>
+        </div>
+      </section>
+
+      <section class="view service-view" id="serviceView">
+        <div class="service-hero">
+          <p class="eyebrow"><span></span> Product Care</p>
+          <h1>내 구매 확인<br /><em>&amp; A/S 접수</em></h1>
+          <p>등록한 제품 정보와 시리얼 번호를 확인하고 새로운 A/S 문의를 접수하세요.</p>
+        </div>
+
+        <div class="service-shell">
+          <section class="lookup-panel" id="lookupPanel">
+            <div class="section-heading">
+              <span>01</span>
+              <div>
+                <p>VERIFY YOUR PRODUCT</p>
+                <h2>본인 구매 확인</h2>
+              </div>
+            </div>
+            <form id="lookupForm">
+              <div class="field-grid two-col">
+                <label class="field">
+                  <span>등록번호 <b>*</b></span>
+                  <input
+                    name="registrationNumber"
+                    type="text"
+                    placeholder="LMM-GM-BK-2606-0001"
+                    required
+                  />
+                </label>
+                <label class="field">
+                  <span>휴대폰 번호 <b>*</b></span>
+                  <input
+                    name="phone"
+                    type="tel"
+                    inputmode="numeric"
+                    placeholder="010-0000-0000"
+                    required
+                  />
+                </label>
+              </div>
+              <p class="form-error hidden" id="lookupError">
+                일치하는 구매 정보를 찾지 못했습니다. 등록번호와 휴대폰 번호를 확인해주세요.
+              </p>
+              <button class="primary-button" type="submit">내 구매 정보 확인하기</button>
+            </form>
+            <section class="recovery-panel">
+              <button class="text-button recovery-toggle" id="recoveryToggle" type="button">
+                등록번호를 잊으셨나요?
+              </button>
+              <form class="hidden" id="recoveryForm">
+                <p>
+                  등록 시 입력한 이름, 휴대폰 번호, 이메일이 모두 일치하면 등록번호를
+                  다시 확인할 수 있습니다.
+                </p>
+                <div class="field-grid two-col">
+                  <label class="field">
+                    <span>이름 <b>*</b></span>
+                    <input name="name" type="text" required />
+                  </label>
+                  <label class="field">
+                    <span>휴대폰 번호 <b>*</b></span>
+                    <input name="phone" type="tel" inputmode="numeric" required />
+                  </label>
+                  <label class="field full">
+                    <span>이메일 <b>*</b></span>
+                    <input name="email" type="email" required />
+                  </label>
+                </div>
+                <p class="form-error hidden" id="recoveryError">
+                  일치하는 등록 정보를 찾지 못했습니다.
+                </p>
+                <button class="outline-button" type="submit">등록번호 찾기</button>
+              </form>
+              <div class="recovery-results hidden" id="recoveryResults"></div>
+            </section>
+          </section>
+
+          <section class="purchase-result hidden" id="purchaseResult">
+            <div class="section-heading">
+              <span>02</span>
+              <div>
+                <p>YOUR REGISTERED PRODUCT</p>
+                <h2>구매 정보</h2>
+              </div>
+            </div>
+            <div class="serial-card">
+              <small>SERIAL NUMBER</small>
+              <strong id="lookupSerial"></strong>
+              <span>RURU &amp; MIMI UNIVERSE CLUB</span>
+            </div>
+            <div class="purchase-grid" id="purchaseDetails"></div>
+            <button class="credit-card hidden" id="creditCard" type="button">
+              <span>UNIVERSE CLUB CREDIT</span>
+              <strong id="creditTotal">0 P</strong>
+              <small>포인트 사용법 보기</small>
+            </button>
+
+            <form id="serviceForm">
+              <fieldset>
+                <legend>추가 A/S 문의 접수</legend>
+                <label class="field">
+                  <span>문의 내용 <b>*</b></span>
+                  <textarea
+                    name="inquiry"
+                    rows="5"
+                    placeholder="제품의 상태와 문제를 자세히 적어주세요"
+                    required
+                  ></textarea>
+                </label>
+                <div class="upload-grid">
+                  <label class="upload-box">
+                    <input name="overallPhoto" type="file" accept="image/*" required />
+                    <strong>제품 전체 사진</strong>
+                    <span>제품 전체가 보이는 사진 1장 <b>필수</b></span>
+                    <small data-file-label="overallPhoto">사진 선택하기</small>
+                  </label>
+                  <label class="upload-box">
+                    <input name="issuePhotos" type="file" accept="image/*" multiple required />
+                    <strong>문제 부분 사진</strong>
+                    <span>문제 부분이 잘 보이는 사진 1장 이상 <b>필수</b></span>
+                    <small data-file-label="issuePhotos">사진 선택하기</small>
+                  </label>
+                </div>
+                <p class="upload-help">JPG, PNG, HEIC 등 이미지 파일을 첨부할 수 있습니다.</p>
+              </fieldset>
+              <button class="primary-button" type="submit">A/S 문의 접수하기</button>
+            </form>
+          </section>
+        </div>
+      </section>
+
+      <section class="view admin-view" id="adminView">
+        <section class="admin-login" id="adminLogin">
+          <div class="admin-login-mark">R<span>&amp;</span>M</div>
+          <p class="eyebrow"><span></span> Private Access</p>
+          <h1>관리자 로그인</h1>
+          <p>고객 정보와 A/S 내역은 관리자만 확인할 수 있습니다.</p>
+          <form id="adminLoginForm">
+            <label class="field">
+              <span>관리자 비밀번호 <b>*</b></span>
+              <input
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="비밀번호를 입력해주세요"
+                required
+              />
+            </label>
+            <p class="form-error hidden" id="adminLoginError">비밀번호가 올바르지 않습니다.</p>
+            <button class="primary-button" type="submit">관리자 페이지 들어가기</button>
+          </form>
+        </section>
+
+        <div class="admin-content hidden" id="adminContent">
+        <div class="admin-heading">
+          <div>
+            <p class="eyebrow"><span></span> Club Management</p>
+            <h1>고객 등록 관리</h1>
+            <p>등록 고객과 후기, 쿠폰 및 A/S 진행 상태를 한눈에 관리하세요.</p>
+          </div>
+          <div class="admin-actions">
+            <button class="outline-button" id="adminAddCustomer">
+              고객 등록
+            </button>
+            <button class="outline-button" id="csvDownload">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 20h14" />
+              </svg>
+              CSV 다운로드
+            </button>
+            <button class="text-button" id="adminLogout">로그아웃</button>
+          </div>
+        </div>
+
+        <div class="stats" id="stats"></div>
+
+        <div class="admin-toolbar">
+          <label class="search-box">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m16 16 4 4" />
+            </svg>
+            <input id="adminSearch" type="search" placeholder="이름, 연락처, 등록번호 검색" />
+          </label>
+          <div class="filters">
+            <select id="productFilter" aria-label="제품 필터">
+              <option value="">모든 제품</option>
+              <option>Gatz Mini</option>
+              <option>Gatz U.P</option>
+              <option>Gatz Twin</option>
+            </select>
+            <select id="asFilter" aria-label="A/S 상태 필터">
+              <option value="">모든 A/S 상태</option>
+              <option>문의 없음</option>
+              <option>접수</option>
+              <option>회수예정</option>
+              <option>회수중</option>
+              <option>처리중</option>
+              <option>처리후발송중</option>
+              <option>처리완료</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-shell">
+          <table>
+            <thead>
+              <tr>
+                <th>등록번호</th>
+                <th>고객</th>
+                <th>제품 정보</th>
+                <th>구매일 / 구매처</th>
+                <th>후기</th>
+                <th>보유 크레딧</th>
+                <th>A/S 상태</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="customerTableBody"></tbody>
+          </table>
+          <div class="empty-state hidden" id="emptyState">
+            <span>R&amp;M</span>
+            <h3>아직 등록된 고객이 없습니다.</h3>
+            <p>첫 번째 유니버스 클럽 멤버를 기다리고 있어요.</p>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <section class="view success-view" id="successView">
+        <div class="success-card">
+          <div class="success-emblem">
+            <span>R&amp;M</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m5 12 4 4L19 6" />
+            </svg>
+          </div>
+          <p class="eyebrow"><span></span> Welcome to the Universe</p>
+          <h1>등록이 완료되었습니다.</h1>
+          <p class="success-copy">
+            루루앤미미 유니버스 클럽의 멤버가 되신 것을 환영합니다.<br />
+            제품을 위한 세심한 케어가 지금부터 시작됩니다.
+          </p>
+          <div class="registration-number">
+            <small>YOUR REGISTRATION NUMBER</small>
+            <strong id="successNumber"></strong>
+            <button id="copyNumber" type="button">등록번호 복사</button>
+          </div>
+          <div class="success-info">
+            <div><span>제품</span><strong id="successProduct"></strong></div>
+            <div><span>색상</span><strong id="successColor"></strong></div>
+            <div><span>구매일</span><strong id="successDate"></strong></div>
+          </div>
+          <p class="success-note">
+            <strong>중요 안내</strong>
+            지금 표시된 시리얼 번호를 반드시 저장해 주세요.<br />
+            시리얼 번호가 있어야 추후 구매 확인 및 A/S 접수가 가능합니다.
+          </p>
+          <button class="primary-button" id="registerAnother">다른 제품 등록하기</button>
+          <button class="text-button" id="goToService">내 구매 확인 · A/S 접수</button>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="privacyDialog">
+      <button class="dialog-close" id="privacyClose" aria-label="닫기">×</button>
+      <p class="eyebrow"><span></span> Privacy</p>
+      <h2>개인정보 수집 및 이용</h2>
+      <p>
+        제품 등록, 고객 지원 및 혜택 제공을 위해 이름, 연락처, 주소, 이메일,
+        구매 정보와 A/S 접수 사진을 수집합니다. 정보는 서비스 제공 목적 달성 후
+        관련 법령에 따라 안전하게 파기됩니다.
+      </p>
+      <button class="primary-button" id="privacyConfirm">확인했습니다</button>
+    </dialog>
+
+    <dialog class="service-detail-dialog" id="serviceDetailDialog">
+      <button class="dialog-close" id="serviceDetailClose" aria-label="닫기">×</button>
+      <p class="eyebrow"><span></span> A/S Management</p>
+      <h2>A/S 상세 관리</h2>
+      <div class="as-meta" id="asMeta"></div>
+
+      <section class="as-section">
+        <h3>고객 문의 내용</h3>
+        <p class="as-inquiry-copy" id="asInquiryContent"></p>
+      </section>
+
+      <section class="as-section">
+        <h3>첨부 사진</h3>
+        <div class="as-photo-gallery" id="asPhotoGallery"></div>
+      </section>
+
+      <form id="asManagementForm">
+        <label class="field">
+          <span>처리 방식 / 상담 내용</span>
+          <textarea
+            name="consultation"
+            rows="5"
+            placeholder="고객과 상담한 내용, 회수 방법, 수선 또는 교환 방식 등을 기록해주세요"
+          ></textarea>
+        </label>
+        <label class="field">
+          <span>진행 상황 <b>*</b></span>
+          <select name="status" required>
+            <option>접수</option>
+            <option>회수예정</option>
+            <option>회수중</option>
+            <option>처리중</option>
+            <option>처리후발송중</option>
+            <option>처리완료</option>
+          </select>
+        </label>
+        <button class="primary-button" type="submit">처리 내용 저장하기</button>
+      </form>
+    </dialog>
+
+    <dialog id="creditDialog">
+      <button class="dialog-close" id="creditClose" aria-label="닫기">×</button>
+      <p class="eyebrow"><span></span> Universe Credit</p>
+      <h2>크레딧 사용 안내</h2>
+      <p>
+        유니버스 클럽 크레딧 사용을 원하시면 포인트 화면을 캡쳐하거나 고객 정보를
+        네이버 스마트스토어 톡톡으로 문의해주세요. 확인 후 스토어 쿠폰을 발행해
+        드립니다.
+      </p>
+      <button class="primary-button" id="creditConfirm" type="button">확인했습니다</button>
+    </dialog>
+
+    <dialog id="creditIssueDialog">
+      <button class="dialog-close" id="creditIssueClose" aria-label="닫기">×</button>
+      <p class="eyebrow"><span></span> Credit Issue</p>
+      <h2>크레딧 발행</h2>
+      <p class="credit-target" id="creditIssueTarget"></p>
+      <form id="creditIssueForm">
+        <label class="field">
+          <span>발행 크레딧 <b>*</b></span>
+          <input
+            name="amount"
+            type="number"
+            inputmode="numeric"
+            min="1"
+            step="1"
+            placeholder="예: 2000"
+            required
+          />
+        </label>
+        <label class="field">
+          <span>발행 사유</span>
+          <input
+            name="reason"
+            type="text"
+            placeholder="예: 후기 확인 크레딧, 이벤트 크레딧"
+          />
+        </label>
+        <button class="primary-button" type="submit">크레딧 발행하기</button>
+      </form>
+    </dialog>
+
+    <dialog class="admin-customer-dialog" id="adminCustomerDialog">
+      <button class="dialog-close" id="adminCustomerClose" aria-label="닫기">×</button>
+      <p class="eyebrow"><span></span> Customer Edit</p>
+      <h2 id="adminCustomerTitle">고객 등록</h2>
+      <form id="adminCustomerForm">
+        <div class="field-grid two-col">
+          <label class="field">
+            <span>이름 <b>*</b></span>
+            <input name="name" type="text" required />
+          </label>
+          <label class="field">
+            <span>휴대폰 번호 <b>*</b></span>
+            <input name="phone" type="tel" inputmode="numeric" required />
+          </label>
+          <label class="field full">
+            <span>주소</span>
+            <input name="address" type="text" />
+          </label>
+          <label class="field">
+            <span>반려동물 이름</span>
+            <input name="dogName" type="text" />
+          </label>
+          <label class="field">
+            <span>이메일</span>
+            <input name="email" type="email" />
+          </label>
+          <label class="field">
+            <span>구매 제품 <b>*</b></span>
+            <select name="product" id="adminProductSelect" required>
+              <option value="">제품 선택</option>
+              <option value="Gatz Mini">Gatz Mini · 겟츠 미니</option>
+              <option value="Gatz U.P">Gatz U.P · 겟츠 유피</option>
+              <option value="Gatz Twin">Gatz Twin · 겟츠 트윈</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>제품 버전 <b>*</b></span>
+            <select name="version" id="adminVersionSelect" required disabled>
+              <option value="">제품 먼저 선택</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>색상 <b>*</b></span>
+            <select name="color" id="adminColorSelect" required disabled>
+              <option value="">버전 먼저 선택</option>
+            </select>
+          </label>
+          <label class="field hidden" id="adminSecondColorField">
+            <span>두 번째 색상 <b>*</b></span>
+            <select name="secondColor" id="adminSecondColorSelect">
+              <option value="">두 번째 색상 선택</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>구매 날짜 <b>*</b></span>
+            <input name="purchaseDate" type="date" required />
+          </label>
+          <label class="field">
+            <span>구매처 <b>*</b></span>
+            <select name="store" id="adminStoreSelect" required>
+              <option value="">구매처 선택</option>
+              <option>공식 온라인 스토어</option>
+              <option>네이버 브랜드 스토어</option>
+              <option>오프라인 매장</option>
+              <option>기타(펫페어)</option>
+            </select>
+          </label>
+          <label class="field full hidden" id="adminStoreDetailField">
+            <span>구매 장소</span>
+            <input name="storeDetail" type="text" />
+          </label>
+          <label class="field full">
+            <span>후기 링크</span>
+            <input name="reviewUrl" type="url" />
+          </label>
+          <label class="field">
+            <span>추천인/추천 반려동물</span>
+            <input name="referralName" type="text" />
+          </label>
+          <label class="field">
+            <span>추천인 전화번호 뒷자리</span>
+            <input name="referralPhoneLast4" type="text" inputmode="numeric" maxlength="4" />
+          </label>
+          <label class="field">
+            <span>A/S 상태</span>
+            <select name="asStatus">
+              <option>문의 없음</option>
+              <option>접수</option>
+              <option>회수예정</option>
+              <option>회수중</option>
+              <option>처리중</option>
+              <option>처리후발송중</option>
+              <option>처리완료</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>보유 크레딧</span>
+            <input
+              name="creditTotal"
+              type="number"
+              inputmode="numeric"
+              min="0"
+              step="1"
+              placeholder="0"
+            />
+            <small>수정 시 차액은 크레딧 조정 내역으로 기록됩니다.</small>
+          </label>
+        </div>
+        <button class="primary-button" type="submit">저장하기</button>
+      </form>
+    </dialog>
+
+    <dialog class="customer-detail-dialog" id="customerDetailDialog">
+      <button class="dialog-close" id="customerDetailClose" aria-label="닫기">×</button>
+      <p class="eyebrow"><span></span> Customer Detail</p>
+      <h2>고객 상세 정보</h2>
+      <div class="customer-detail-grid" id="customerDetailGrid"></div>
+      <section class="as-section">
+        <h3>크레딧 내역</h3>
+        <div class="credit-history" id="customerCreditHistory"></div>
+      </section>
+      <button class="primary-button" id="customerDetailEdit" type="button">고객 정보 수정</button>
+    </dialog>
+
+    <div class="toast" id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
